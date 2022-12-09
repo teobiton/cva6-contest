@@ -192,7 +192,7 @@ main(void)
 
 #endif
 
-    printk("RIPE is alive! %s\n", CONFIG_BOARD);
+    printk("RIPE is alive! program from %s at %s\n", __DATE__, __TIME__);
     print_current_test_parameters();
     try_attack();
 
