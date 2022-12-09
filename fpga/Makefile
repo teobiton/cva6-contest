@@ -28,6 +28,7 @@
 # =========================================================================== #
 
 VIVADO ?= vivado
+XSCT   ?= xsct
 
 work-dir := work-fpga
 bit := $(work-dir)/cva6_fpga.bit
@@ -60,7 +61,7 @@ endif
 
 
 program_cva6_fpga:
-	xsct scripts/program_cva6_fpga.tcl	
+	$(XSCT) scripts/program_cva6_fpga.tcl	
 
 get_hs2_sn:
 	$(VIVADO) -mode batch -source scripts/get_hs2_sn.tcl
