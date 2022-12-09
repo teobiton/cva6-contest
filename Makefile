@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Thales.
-# 
+#
 # Copyright and related rights are licensed under the Apache
 # License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License.  You may obtain a copy of the License at
@@ -311,10 +311,13 @@ cva6_fpga_ddr: $(ariane_pkg) $(util) $(src) $(fpga_src) $(uart_src)
 	cd fpga && make cva6_fpga PS7_DDR=1 BRAM=0 XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE)
 
 
-program_cva6_fpga: 
+program_cva6_fpga:
 	@echo "[FPGA] Program FPGA"
 	cd fpga && make program_cva6_fpga BOARD=$(BOARD) XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE)
 
+environment:
+	make program_cva6_fpga
+	cd zephyr-docker && sudo docker run -ti --privileged -v `realpath workspace`:/workdir zephyr-build:v1
 
 clean:
 	rm -rf $(riscv-torture-dir)/output/test*
@@ -326,5 +329,5 @@ clean:
 .PHONY:
 	build sim benchmark clean   \
 	$(riscv-benchmarks)          \
-	check-benchmarks                 
-                        
+	check-benchmarks
+
