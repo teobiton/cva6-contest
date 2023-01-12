@@ -613,7 +613,7 @@ package ariane_pkg;
     // ---------------
     // MMU instanciation
     // ---------------
-     localparam bit MMU_PRESENT = 1'b0;  // MMU is present
+     localparam bit MMU_PRESENT = 1'b1;  // MMU is present
 
     // --------------------
     // Atomics

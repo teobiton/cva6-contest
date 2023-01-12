@@ -340,8 +340,8 @@ module mmu import ariane_pkg::*; #(
             end
             // Giga page
             if (dtlb_is_1G_q) begin
-                lsu_paddr_o[29:12] = lsu_vaddr_q[29:12];
-                lsu_dtlb_ppn_o[29:12] = lsu_vaddr_n[29:12];
+                lsu_paddr_o[riscv::PPNW-1:12] = lsu_vaddr_q[riscv::PPNW-1:12];
+                lsu_dtlb_ppn_o[riscv::PPNW-1:12] = lsu_vaddr_n[riscv::PPNW-1:12];
             end
             // ---------
             // DTLB Hit
