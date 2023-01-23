@@ -28,7 +28,7 @@
 # 2020-10-06  0.1      k.Eyssartier Created
 # =========================================================================== #
 
-XLEN ?= 32
+XLEN ?= 64
 
 default: all
 
@@ -58,7 +58,6 @@ bmarks = \
 #--------------------------------------------------------------------
 # Build rules
 #--------------------------------------------------------------------
-
 RISCV_PREFIX ?= riscv$(XLEN)-unknown-elf-
 RISCV_GCC ?= $(RISCV_PREFIX)gcc
 RISCV_OBJCOPY ?= $(RISCV_PREFIX)objcopy
@@ -82,7 +81,8 @@ INCS += -I$(src_dir)/../bsp/config \
 	-I$(src_dir)/../bsp/hal \
 	-I$(src_dir)/coremark/simple \
 	-I$(src_dir)/common \
-	$(addprefix -I$(src_dir)/, $(bmarks))
+	$(addprefix -I$(src_dir)/, $(bmarks)) \
+	-I/usr/include
 	
 FLAGS_STR:="$(RISCV_CFLAGS)  $(RISCV_LDFLAGS) "
 
@@ -91,13 +91,14 @@ CFLAGS ?=-DPREALLOCATE=1 -fvisibility=hidden -DSTDIO_THRU_UART -O3 -mcmodel=meda
 RISCV_CFLAGS :=-DPERFORMANCE_RUN=1 \
 		-DITERATIONS=3 \
 		-DFLAGS_STR=\"$(FLAGS_STR)\" \
-		-DPREALLOCATE=1 -fvisibility=hidden -DSTDIO_THRU_UART -O3 -mcmodel=medany   -static  -Wall -pedantic 
+		-DPREALLOCATE=1 -fvisibility=hidden -DSTDIO_THRU_UART -O3 -mcmodel=medany   -static  -Wall -pedantic \
+		-march=rv32imac -mabi=ilp32 
 
 RISCV_LDFLAGS=-L./ -lcva6 -static -nostartfiles -T $(src_dir)/../bsp/config/link.ld
 
 
 
-incs  += -I$(src_dir)/../env -I$(src_dir)/common $(addprefix -I$(src_dir)/, $(bmarks))
+incs  += -I$(src_dir)/../env -I$(src_dir)/common $(addprefix -I$(src_dir)/, $(bmarks)) 
 objs  :=
 
 
