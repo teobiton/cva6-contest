@@ -6,11 +6,11 @@ top_level      ?= pmp_tb
 questa_version ?= # -10.7b
 
 compile_flags = +cover -incr -64 -permissive
-sim_flags = -t 1ps -debugdb -voptargs="+acc" -do "run -all; quit" 
+sim_flags = -t 1ms -debugdb -voptargs="+acc" -do "run -all; quit" 
 
-src = $(wildcard src/*.sv)
+src = $(wildcard src/*.sv) ../common_cells/src/lzc.sv
 inc = $(wildcard include/*.sv)
-tb = $(wildcard tb/*.sv)
+tb = tb/tb_pkg.sv tb/pmp_tb.sv
 
 compile-sim:
 	rm -rf ${library}
