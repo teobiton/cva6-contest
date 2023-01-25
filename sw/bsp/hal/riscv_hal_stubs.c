@@ -32,6 +32,7 @@
 
 
 #include <unistd.h>
+#include <stdint.h>
 
 
 __attribute__((weak))  uint8_t NoInterrupt_IRQHandler(void)

@@ -58,7 +58,7 @@ bmarks = \
 #--------------------------------------------------------------------
 # Build rules
 #--------------------------------------------------------------------
-RISCV_PREFIX ?= riscv$(XLEN)-unknown-elf-
+RISCV_PREFIX ?= /home/ietr/PTECH/riscv_compile/bin/riscv$(XLEN)-unknown-elf-
 RISCV_GCC ?= $(RISCV_PREFIX)gcc
 RISCV_OBJCOPY ?= $(RISCV_PREFIX)objcopy
 RISCV_AR ?= $(RISCV_PREFIX)ar
@@ -81,12 +81,12 @@ INCS += -I$(src_dir)/../bsp/config \
 	-I$(src_dir)/../bsp/hal \
 	-I$(src_dir)/coremark/simple \
 	-I$(src_dir)/common \
-	$(addprefix -I$(src_dir)/, $(bmarks)) \
-	-I/usr/include
+	$(addprefix -I$(src_dir)/, $(bmarks))
 	
 FLAGS_STR:="$(RISCV_CFLAGS)  $(RISCV_LDFLAGS) "
 
-CFLAGS ?=-DPREALLOCATE=1 -fvisibility=hidden -DSTDIO_THRU_UART -O3 -mcmodel=medany   -static  -Wall -pedantic 
+CFLAGS ?=-DPREALLOCATE=1 -fvisibility=hidden -DSTDIO_THRU_UART -O3 -mcmodel=medany   -static  -Wall -pedantic \
+		 -march=rv32imac -mabi=ilp32 
 
 RISCV_CFLAGS :=-DPERFORMANCE_RUN=1 \
 		-DITERATIONS=3 \
@@ -94,9 +94,7 @@ RISCV_CFLAGS :=-DPERFORMANCE_RUN=1 \
 		-DPREALLOCATE=1 -fvisibility=hidden -DSTDIO_THRU_UART -O3 -mcmodel=medany   -static  -Wall -pedantic \
 		-march=rv32imac -mabi=ilp32 
 
-RISCV_LDFLAGS=-L./ -lcva6 -static -nostartfiles -T $(src_dir)/../bsp/config/link.ld
-
-
+RISCV_LDFLAGS=-L./ -lcva6 -static -nostartfiles -T $(src_dir)/../bsp/config/link.ld -march=rv32imac -mabi=ilp32 
 
 incs  += -I$(src_dir)/../env -I$(src_dir)/common $(addprefix -I$(src_dir)/, $(bmarks)) 
 objs  :=
@@ -128,7 +126,7 @@ $(foreach bmark,$(bmarks),$(eval $(call generate_rules,$(bmark))))
 	$(RISCV_OBJCOPY) -O binary $< $@
 
 libcva6.a: $(OBJ_BSP)
-	$(RISCV_AR) rcs libcva6.a $(OBJ_BSP)
+	$(RISCV_AR) --target=elf32-littleriscv rcs libcva6.a $(OBJ_BSP) 
 
 %.o: %.c
 	$(RISCV_GCC) $(INCS) -o $@ -c $< $(RISCV_CFLAGS)

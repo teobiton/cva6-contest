@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "util.h"
+#include "encoding.h"
 
 volatile int trap_expected;
 
