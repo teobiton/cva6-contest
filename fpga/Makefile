@@ -28,7 +28,7 @@
 # =========================================================================== #
 
 VIVADO ?= vivado
-XSCT   ?= xsct
+XSCT   ?= /home/ietr/Xilinx_2020_1/Vitis/2020.1/bin/xsct
 
 work-dir := work-fpga
 bit := $(work-dir)/cva6_fpga.bit
