@@ -1,0 +1,8 @@
+*** Booting Zephyr OS build zephyr-v3.2.0-327-g869365ab012b  ***
+RIPE is alive! cv32a6_zybo
+RIPE parameters:
+technique       indirect
+inject param    returnintolibc
+code pointer    structfuncptrheap
+location        heap
+function        homebrew

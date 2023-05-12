@@ -1,0 +1,125 @@
+ 
+user@d06761bf0c0d:/workdir$ make build-perf
+west build -p -b cv32a6_zybo /workdir/perf_baseline
+-- west build: making build dir /workdir/build pristine
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+-- Application: /workdir/perf_baseline
+-- Found Python3: /usr/bin/python3.8 (found suitable exact version "3.8.10") found components: Interpreter
+-- Cache files will be written to: /workdir/zephyr/.cache
+-- Zephyr version: 3.2.99 (/workdir/zephyr)
+-- Found west (found suitable version "0.14.0", minimum required is "0.7.1")
+-- Board: cv32a6_zybo
+-- Found host-tools: zephyr 0.15.1 (/opt/toolchains/zephyr-sdk-0.15.1)
+-- Found toolchain: zephyr 0.15.1 (/opt/toolchains/zephyr-sdk-0.15.1)
+-- Found Dtc: /opt/toolchains/zephyr-sdk-0.15.1/sysroots/x86_64-pokysdk-linux/usr/bin/dtc (found suitable version "1.6.0", minimum required is "1.4.6")
+-- Found BOARD.dts: /workdir/zephyr/boards/riscv/cv32a6_zybo/cv32a6_zybo.dts
+node '/cpus/cpu@0' compatible 'ohwg,cva6' has unknown vendor prefix 'ohwg'
+node '/soc' compatible 'eth,cva6-bare-soc' has unknown vendor prefix 'eth'
+-- Generated zephyr.dts: /workdir/build/zephyr/zephyr.dts
+-- Generated devicetree_generated.h: /workdir/build/zephyr/include/generated/devicetree_generated.h
+-- Including generated dts.cmake file: /workdir/build/zephyr/dts.cmake
+Parsing /workdir/zephyr/Kconfig
+Loaded configuration '/workdir/zephyr/boards/riscv/cv32a6_zybo/cv32a6_zybo_defconfig'
+Merged configuration '/workdir/perf_baseline/prj.conf'
+Configuration saved to '/workdir/build/zephyr/.config'
+Kconfig header saved to '/workdir/build/zephyr/include/generated/autoconf.h'
+
+warning: The choice symbol BOARD_CV32A6_ZYBO (defined at boards/riscv/cv32a6_zybo/Kconfig.board:3)
+was selected (set =y), but no symbol ended up as the choice selection. See
+http://docs.zephyrproject.org/latest/kconfig.html#CONFIG_BOARD_CV32A6_ZYBO and/or look up
+BOARD_CV32A6_ZYBO in the menuconfig/guiconfig interface. The Application Development Primer, Setting
+Configuration Values, and Kconfig - Tips and Best Practices sections of the manual might be helpful
+too.
+
+-- The C compiler identification is GNU 12.1.0
+-- The CXX compiler identification is GNU 12.1.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /opt/toolchains/zephyr-sdk-0.15.1/riscv64-zephyr-elf/bin/riscv64-zephyr-elf-gcc
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /workdir/build
+-- west build: building application
+[1/106] Preparing syscall dependency handling
+
+[2/106] Generating include/generated/version.h
+-- Zephyr version: 3.2.99 (/workdir/zephyr), build: zephyr-v3.2.0-327-g869365ab012b
+[51/106] Building C object CMakeFiles/app.dir/src/testapp.c.obj
+/workdir/perf_baseline/src/testapp.c: In function 'main':
+/workdir/perf_baseline/src/testapp.c:56:67: warning: format '%u' expects argument of type 'unsigned int', but argument 5 has type 'uint64_t' {aka 'long long unsigned int'} [-Wformat=]
+   56 |    fprintf(stdout,"SUCCESS: computed value %f - duration: %f sec %u cycles\n", sum, total_cycles/FREQ, total_cycles);
+      |                                                                  ~^                                    ~~~~~~~~~~~~
+      |                                                                   |                                    |
+      |                                                                   unsigned int                         uint64_t {aka long long unsigned int}
+      |                                                                  %llu
+[96/106] Linking C executable zephyr/zephyr_pre0.elf
+
+[100/106] Linking C executable zephyr/zephyr_pre1.elf
+
+[106/106] Linking C executable zephyr/zephyr.elf
+Memory region         Used Size  Region Size  %age Used
+             RAM:       61936 B         1 GB      0.01%
+        IDT_LIST:          0 GB         2 KB      0.00%
+west debug
+-- west debug: rebuilding
+ninja: no work to do.
+-- west debug: using runner openocd
+-- runners.openocd: OpenOCD GDB server running on port 3333; no thread info available
+Open On-Chip Debugger 0.11.0+dev-00725-gc5c47943d-dirty (2022-10-03-06:14)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+Info : auto-selecting first available session transport "jtag". To override use 'transport select <transport>'.
+Warn : `riscv set_prefer_sba` is deprecated. Please use `riscv set_mem_access` instead.
+Ready for Remote Connections
+Info : clock speed 1000 kHz
+Info : JTAG tap: riscv.cpu tap/device found: 0x249511c3 (mfg: 0x0e1 (Wintec Industries), part: 0x4951, ver: 0x2)
+Info : datacount=2 progbufsize=8
+Info : Examined RISC-V core; found 1 harts
+Info :  hart 0: XLEN=32, misa=0x40141105
+Info : starting gdb server for riscv.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+    TargetName         Type       Endian TapName            State
+--  ------------------ ---------- ------ ------------------ ------------
+ 0* riscv.cpu          riscv      little riscv.cpu          halted
+
+Info : Listening on port 6333 for tcl connections
+Info : Listening on port 4444 for telnet connections
+GNU gdb (Zephyr SDK 0.15.1) 12.1
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "--host=x86_64-build_pc-linux-gnu --target=riscv64-zephyr-elf".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://github.com/zephyrproject-rtos/sdk-ng/issues>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /workdir/build/zephyr/zephyr.elf...
+Remote debugging using :3333
+Info : accepting 'gdb' connection on tcp/3333
+0x80005570 in sys_clock_driver_init (dev=<optimized out>)
+    at /workdir/zephyr/drivers/timer/riscv_machine_timer.c:197
+197             last_count = mtime();
+Loading section rom_start, size 0x18 lma 0x80000000
+Loading section reset, size 0x4 lma 0x80000018
+Loading section exceptions, size 0x1c8 lma 0x8000001c
+Loading section text, size 0xbc38 lma 0x800001e4
+Loading section initlevel, size 0x28 lma 0x8000be1c
+Loading section devices, size 0x18 lma 0x8000be44
+Loading section sw_isr_table, size 0x200 lma 0x8000be5c
+Loading section device_handles, size 0x6 lma 0x8000c05c
+Loading section rodata, size 0x9cc lma 0x8000c068
+Loading section datas, size 0x1f0 lma 0x8000efc0
+Loading section device_states, size 0x4 lma 0x8000f1b0
+Loading section k_mutex_area, size 0x3c lma 0x8000f1b4
+Start address 0x80000000, load size 52318
+Transfer rate: 53 KB/sec, 3487 bytes/write.
+(gdb) c
+Continuing.
+
