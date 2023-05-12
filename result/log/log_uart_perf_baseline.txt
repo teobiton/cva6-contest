@@ -1,0 +1,3 @@
+*** Booting Zephyr OS build zephyr-v3.2.0-327-g86936*
+Begining of execution with depth 12, call number 50,0
+SUCCESS: computed value 868200.000000 - duration: 73s
